@@ -16,8 +16,8 @@ parameter CYCLE = 20.0;
 parameter MAX_LAT = 200;
 integer NPAT;
 
-reg [2:0] in_mem   [0:100000];
-reg [7:0] gold_mem [0:100000];
+reg [2:0] in_mem   [0:2000000];
+reg [7:0] gold_mem [0:2000000];
 
 integer p, i, lat, maxlat, errs, gap, fd;
 integer sumlat;

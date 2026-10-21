@@ -76,8 +76,10 @@ initial begin
         if (out_valid !== 1'b0) begin
             $display("FAIL pattern %0d: out_valid longer than one cycle", p); errs = errs + 1;
         end
-        gap = 2 + (p % 5);
-        repeat (gap) @(negedge clk);
+        if (!$test$plusargs("TIGHT")) begin
+            gap = 2 + (p % 5);
+            repeat (gap) @(negedge clk);
+        end
     end
     if (errs == 0) begin
         $display("==================================================");

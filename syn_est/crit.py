@@ -46,10 +46,15 @@ if len(sys.argv) > 3:
     ix = outs.index(worst) - nreal
     if 0 <= ix < len(lat): print("endpoint flop:", lat[ix])
     # list top-10 slowest endpoints by flop name
-    rank = sorted(outs, key=lambda o: -at(o))[:12]
-    for o in rank:
+    import re as _re
+    stem = {}
+    for o in outs:
         j = outs.index(o) - nreal
-        print("  %.2f  %s" % (arr[o], lat[j] if 0 <= j < len(lat) else o))
+        nm = lat[j] if 0 <= j < len(lat) else o
+        k = _re.sub(r'\[.*', '', nm)
+        stem[k] = max(stem.get(k, 0), at(o))
+    for k, v in sorted(stem.items(), key=lambda x: -x[1])[:14]:
+        print("  %.2f  %s" % (v, k))
 print("worst endpoint:", worst, "delay %.2f" % arr[worst])
 path = []; n = worst
 while n is not None:

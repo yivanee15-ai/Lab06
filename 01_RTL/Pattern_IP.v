@@ -30,11 +30,11 @@ end
 endmodule
 
 module Pattern_IP;
-ip_check #(3, 4)  c0 ();
-ip_check #(4, 6)  c1 ();
-ip_check #(5, 8)  c2 ();
-ip_check #(6, 10) c3 ();
-ip_check #(6, 12) c4 ();
-ip_check #(8, 12) c5 ();
+ip_check #(3, 4, 400, "3x4")  c0 ();
+ip_check #(4, 6, 400, "4x6")  c1 ();
+ip_check #(5, 8, 400, "5x8")  c2 ();
+ip_check #(6, 10, 400, "6x10") c3 ();
+ip_check #(6, 12, 400, "6x12") c4 ();
+ip_check #(8, 12, 400, "8x12") c5 ();
 initial #2000 $finish;
 endmodule

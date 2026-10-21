@@ -20,6 +20,7 @@ reg [2:0] in_mem   [0:100000];
 reg [7:0] gold_mem [0:100000];
 
 integer p, i, lat, maxlat, errs, gap, fd;
+integer sumlat;
 reg [4:0] g_cand, g_chain;
 reg [6:0] g_erased;
 
@@ -34,7 +35,7 @@ initial begin
     $readmemh("dat/top_gold.dat", gold_mem);
     clk = 0; rst_n = 1; in_valid = 0;
     in_cell = 3'bx; in_puyo_a = 3'bx; in_puyo_b = 3'bx;
-    errs = 0; maxlat = 0;
+    errs = 0; maxlat = 0; sumlat = 0;
     #(CYCLE*0.7) rst_n = 0;
     #(CYCLE*2.3);
     if (out_valid !== 0 || out_best_candidate !== 0 || out_chain !== 0 || out_erased !== 0) begin
@@ -63,6 +64,7 @@ initial begin
             $display("FAIL pattern %0d: latency exceeds %0d", p, MAX_LAT); $finish;
         end
         if (lat > maxlat) maxlat = lat;
+        sumlat = sumlat + lat;
         g_cand = gold_mem[p*3]; g_chain = gold_mem[p*3+1]; g_erased = gold_mem[p*3+2];
         if (out_best_candidate !== g_cand || out_chain !== g_chain || out_erased !== g_erased) begin
             errs = errs + 1;
@@ -79,7 +81,7 @@ initial begin
     end
     if (errs == 0) begin
         $display("==================================================");
-        $display(" TOP PASS: %0d patterns, max latency = %0d cycles", NPAT, maxlat);
+        $display(" TOP PASS: %0d patterns, max latency = %0d, avg latency = %0d.%02d cycles", NPAT, maxlat, sumlat/NPAT, (sumlat*100/NPAT)%100);
         $display("==================================================");
     end else $display("TOP FAILED with %0d errors", errs);
     $finish;

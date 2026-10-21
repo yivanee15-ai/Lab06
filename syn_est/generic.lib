@@ -1,0 +1,439 @@
+library(generic){
+  delay_model : table_lookup;
+  time_unit : "1ns";
+  capacitive_load_unit(1,pf);
+  lu_table_template(t){ variable_1 : input_net_transition; variable_2 : total_output_net_capacitance; index_1("0.01, 1.0"); index_2("0.001, 0.1"); }
+  cell(INV){ area : 0.67;
+    pin(A){ direction : input; capacitance : 0.002; }
+    pin(Y){ direction : output; function : "!A"; max_capacitance : 1.0;
+      timing(){ related_pin : "A"; timing_sense : non_unate;
+        cell_rise(t){ values("0.030, 0.280", "0.050, 0.300"); }
+        cell_fall(t){ values("0.030, 0.280", "0.050, 0.300"); }
+        rise_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+        fall_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+      }
+    }
+  }
+  cell(BUF){ area : 1.0;
+    pin(A){ direction : input; capacitance : 0.002; }
+    pin(Y){ direction : output; function : "A"; max_capacitance : 1.0;
+      timing(){ related_pin : "A"; timing_sense : non_unate;
+        cell_rise(t){ values("0.050, 0.300", "0.070, 0.320"); }
+        cell_fall(t){ values("0.050, 0.300", "0.070, 0.320"); }
+        rise_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+        fall_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+      }
+    }
+  }
+  cell(NAND2){ area : 1.0;
+    pin(A){ direction : input; capacitance : 0.002; }
+    pin(B){ direction : input; capacitance : 0.002; }
+    pin(Y){ direction : output; function : "!(A&B)"; max_capacitance : 1.0;
+      timing(){ related_pin : "A"; timing_sense : non_unate;
+        cell_rise(t){ values("0.050, 0.300", "0.070, 0.320"); }
+        cell_fall(t){ values("0.050, 0.300", "0.070, 0.320"); }
+        rise_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+        fall_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+      }
+      timing(){ related_pin : "B"; timing_sense : non_unate;
+        cell_rise(t){ values("0.050, 0.300", "0.070, 0.320"); }
+        cell_fall(t){ values("0.050, 0.300", "0.070, 0.320"); }
+        rise_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+        fall_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+      }
+    }
+  }
+  cell(NOR2){ area : 1.0;
+    pin(A){ direction : input; capacitance : 0.002; }
+    pin(B){ direction : input; capacitance : 0.002; }
+    pin(Y){ direction : output; function : "!(A|B)"; max_capacitance : 1.0;
+      timing(){ related_pin : "A"; timing_sense : non_unate;
+        cell_rise(t){ values("0.060, 0.310", "0.080, 0.330"); }
+        cell_fall(t){ values("0.060, 0.310", "0.080, 0.330"); }
+        rise_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+        fall_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+      }
+      timing(){ related_pin : "B"; timing_sense : non_unate;
+        cell_rise(t){ values("0.060, 0.310", "0.080, 0.330"); }
+        cell_fall(t){ values("0.060, 0.310", "0.080, 0.330"); }
+        rise_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+        fall_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+      }
+    }
+  }
+  cell(AND2){ area : 1.33;
+    pin(A){ direction : input; capacitance : 0.002; }
+    pin(B){ direction : input; capacitance : 0.002; }
+    pin(Y){ direction : output; function : "(A&B)"; max_capacitance : 1.0;
+      timing(){ related_pin : "A"; timing_sense : non_unate;
+        cell_rise(t){ values("0.090, 0.340", "0.110, 0.360"); }
+        cell_fall(t){ values("0.090, 0.340", "0.110, 0.360"); }
+        rise_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+        fall_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+      }
+      timing(){ related_pin : "B"; timing_sense : non_unate;
+        cell_rise(t){ values("0.090, 0.340", "0.110, 0.360"); }
+        cell_fall(t){ values("0.090, 0.340", "0.110, 0.360"); }
+        rise_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+        fall_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+      }
+    }
+  }
+  cell(OR2){ area : 1.33;
+    pin(A){ direction : input; capacitance : 0.002; }
+    pin(B){ direction : input; capacitance : 0.002; }
+    pin(Y){ direction : output; function : "(A|B)"; max_capacitance : 1.0;
+      timing(){ related_pin : "A"; timing_sense : non_unate;
+        cell_rise(t){ values("0.100, 0.350", "0.120, 0.370"); }
+        cell_fall(t){ values("0.100, 0.350", "0.120, 0.370"); }
+        rise_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+        fall_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+      }
+      timing(){ related_pin : "B"; timing_sense : non_unate;
+        cell_rise(t){ values("0.100, 0.350", "0.120, 0.370"); }
+        cell_fall(t){ values("0.100, 0.350", "0.120, 0.370"); }
+        rise_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+        fall_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+      }
+    }
+  }
+  cell(NAND3){ area : 1.33;
+    pin(A){ direction : input; capacitance : 0.002; }
+    pin(B){ direction : input; capacitance : 0.002; }
+    pin(C){ direction : input; capacitance : 0.002; }
+    pin(Y){ direction : output; function : "!(A&B&C)"; max_capacitance : 1.0;
+      timing(){ related_pin : "A"; timing_sense : non_unate;
+        cell_rise(t){ values("0.070, 0.320", "0.090, 0.340"); }
+        cell_fall(t){ values("0.070, 0.320", "0.090, 0.340"); }
+        rise_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+        fall_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+      }
+      timing(){ related_pin : "B"; timing_sense : non_unate;
+        cell_rise(t){ values("0.070, 0.320", "0.090, 0.340"); }
+        cell_fall(t){ values("0.070, 0.320", "0.090, 0.340"); }
+        rise_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+        fall_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+      }
+      timing(){ related_pin : "C"; timing_sense : non_unate;
+        cell_rise(t){ values("0.070, 0.320", "0.090, 0.340"); }
+        cell_fall(t){ values("0.070, 0.320", "0.090, 0.340"); }
+        rise_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+        fall_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+      }
+    }
+  }
+  cell(NOR3){ area : 1.33;
+    pin(A){ direction : input; capacitance : 0.002; }
+    pin(B){ direction : input; capacitance : 0.002; }
+    pin(C){ direction : input; capacitance : 0.002; }
+    pin(Y){ direction : output; function : "!(A|B|C)"; max_capacitance : 1.0;
+      timing(){ related_pin : "A"; timing_sense : non_unate;
+        cell_rise(t){ values("0.090, 0.340", "0.110, 0.360"); }
+        cell_fall(t){ values("0.090, 0.340", "0.110, 0.360"); }
+        rise_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+        fall_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+      }
+      timing(){ related_pin : "B"; timing_sense : non_unate;
+        cell_rise(t){ values("0.090, 0.340", "0.110, 0.360"); }
+        cell_fall(t){ values("0.090, 0.340", "0.110, 0.360"); }
+        rise_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+        fall_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+      }
+      timing(){ related_pin : "C"; timing_sense : non_unate;
+        cell_rise(t){ values("0.090, 0.340", "0.110, 0.360"); }
+        cell_fall(t){ values("0.090, 0.340", "0.110, 0.360"); }
+        rise_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+        fall_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+      }
+    }
+  }
+  cell(AND3){ area : 1.67;
+    pin(A){ direction : input; capacitance : 0.002; }
+    pin(B){ direction : input; capacitance : 0.002; }
+    pin(C){ direction : input; capacitance : 0.002; }
+    pin(Y){ direction : output; function : "(A&B&C)"; max_capacitance : 1.0;
+      timing(){ related_pin : "A"; timing_sense : non_unate;
+        cell_rise(t){ values("0.110, 0.360", "0.130, 0.380"); }
+        cell_fall(t){ values("0.110, 0.360", "0.130, 0.380"); }
+        rise_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+        fall_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+      }
+      timing(){ related_pin : "B"; timing_sense : non_unate;
+        cell_rise(t){ values("0.110, 0.360", "0.130, 0.380"); }
+        cell_fall(t){ values("0.110, 0.360", "0.130, 0.380"); }
+        rise_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+        fall_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+      }
+      timing(){ related_pin : "C"; timing_sense : non_unate;
+        cell_rise(t){ values("0.110, 0.360", "0.130, 0.380"); }
+        cell_fall(t){ values("0.110, 0.360", "0.130, 0.380"); }
+        rise_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+        fall_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+      }
+    }
+  }
+  cell(OR3){ area : 1.67;
+    pin(A){ direction : input; capacitance : 0.002; }
+    pin(B){ direction : input; capacitance : 0.002; }
+    pin(C){ direction : input; capacitance : 0.002; }
+    pin(Y){ direction : output; function : "(A|B|C)"; max_capacitance : 1.0;
+      timing(){ related_pin : "A"; timing_sense : non_unate;
+        cell_rise(t){ values("0.120, 0.370", "0.140, 0.390"); }
+        cell_fall(t){ values("0.120, 0.370", "0.140, 0.390"); }
+        rise_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+        fall_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+      }
+      timing(){ related_pin : "B"; timing_sense : non_unate;
+        cell_rise(t){ values("0.120, 0.370", "0.140, 0.390"); }
+        cell_fall(t){ values("0.120, 0.370", "0.140, 0.390"); }
+        rise_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+        fall_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+      }
+      timing(){ related_pin : "C"; timing_sense : non_unate;
+        cell_rise(t){ values("0.120, 0.370", "0.140, 0.390"); }
+        cell_fall(t){ values("0.120, 0.370", "0.140, 0.390"); }
+        rise_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+        fall_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+      }
+    }
+  }
+  cell(NAND4){ area : 1.67;
+    pin(A){ direction : input; capacitance : 0.002; }
+    pin(B){ direction : input; capacitance : 0.002; }
+    pin(C){ direction : input; capacitance : 0.002; }
+    pin(D){ direction : input; capacitance : 0.002; }
+    pin(Y){ direction : output; function : "!(A&B&C&D)"; max_capacitance : 1.0;
+      timing(){ related_pin : "A"; timing_sense : non_unate;
+        cell_rise(t){ values("0.090, 0.340", "0.110, 0.360"); }
+        cell_fall(t){ values("0.090, 0.340", "0.110, 0.360"); }
+        rise_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+        fall_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+      }
+      timing(){ related_pin : "B"; timing_sense : non_unate;
+        cell_rise(t){ values("0.090, 0.340", "0.110, 0.360"); }
+        cell_fall(t){ values("0.090, 0.340", "0.110, 0.360"); }
+        rise_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+        fall_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+      }
+      timing(){ related_pin : "C"; timing_sense : non_unate;
+        cell_rise(t){ values("0.090, 0.340", "0.110, 0.360"); }
+        cell_fall(t){ values("0.090, 0.340", "0.110, 0.360"); }
+        rise_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+        fall_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+      }
+      timing(){ related_pin : "D"; timing_sense : non_unate;
+        cell_rise(t){ values("0.090, 0.340", "0.110, 0.360"); }
+        cell_fall(t){ values("0.090, 0.340", "0.110, 0.360"); }
+        rise_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+        fall_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+      }
+    }
+  }
+  cell(NOR4){ area : 1.67;
+    pin(A){ direction : input; capacitance : 0.002; }
+    pin(B){ direction : input; capacitance : 0.002; }
+    pin(C){ direction : input; capacitance : 0.002; }
+    pin(D){ direction : input; capacitance : 0.002; }
+    pin(Y){ direction : output; function : "!(A|B|C|D)"; max_capacitance : 1.0;
+      timing(){ related_pin : "A"; timing_sense : non_unate;
+        cell_rise(t){ values("0.120, 0.370", "0.140, 0.390"); }
+        cell_fall(t){ values("0.120, 0.370", "0.140, 0.390"); }
+        rise_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+        fall_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+      }
+      timing(){ related_pin : "B"; timing_sense : non_unate;
+        cell_rise(t){ values("0.120, 0.370", "0.140, 0.390"); }
+        cell_fall(t){ values("0.120, 0.370", "0.140, 0.390"); }
+        rise_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+        fall_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+      }
+      timing(){ related_pin : "C"; timing_sense : non_unate;
+        cell_rise(t){ values("0.120, 0.370", "0.140, 0.390"); }
+        cell_fall(t){ values("0.120, 0.370", "0.140, 0.390"); }
+        rise_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+        fall_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+      }
+      timing(){ related_pin : "D"; timing_sense : non_unate;
+        cell_rise(t){ values("0.120, 0.370", "0.140, 0.390"); }
+        cell_fall(t){ values("0.120, 0.370", "0.140, 0.390"); }
+        rise_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+        fall_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+      }
+    }
+  }
+  cell(AOI21){ area : 1.33;
+    pin(A){ direction : input; capacitance : 0.002; }
+    pin(B){ direction : input; capacitance : 0.002; }
+    pin(C){ direction : input; capacitance : 0.002; }
+    pin(Y){ direction : output; function : "!((A&B)|C)"; max_capacitance : 1.0;
+      timing(){ related_pin : "A"; timing_sense : non_unate;
+        cell_rise(t){ values("0.070, 0.320", "0.090, 0.340"); }
+        cell_fall(t){ values("0.070, 0.320", "0.090, 0.340"); }
+        rise_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+        fall_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+      }
+      timing(){ related_pin : "B"; timing_sense : non_unate;
+        cell_rise(t){ values("0.070, 0.320", "0.090, 0.340"); }
+        cell_fall(t){ values("0.070, 0.320", "0.090, 0.340"); }
+        rise_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+        fall_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+      }
+      timing(){ related_pin : "C"; timing_sense : non_unate;
+        cell_rise(t){ values("0.070, 0.320", "0.090, 0.340"); }
+        cell_fall(t){ values("0.070, 0.320", "0.090, 0.340"); }
+        rise_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+        fall_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+      }
+    }
+  }
+  cell(OAI21){ area : 1.33;
+    pin(A){ direction : input; capacitance : 0.002; }
+    pin(B){ direction : input; capacitance : 0.002; }
+    pin(C){ direction : input; capacitance : 0.002; }
+    pin(Y){ direction : output; function : "!((A|B)&C)"; max_capacitance : 1.0;
+      timing(){ related_pin : "A"; timing_sense : non_unate;
+        cell_rise(t){ values("0.070, 0.320", "0.090, 0.340"); }
+        cell_fall(t){ values("0.070, 0.320", "0.090, 0.340"); }
+        rise_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+        fall_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+      }
+      timing(){ related_pin : "B"; timing_sense : non_unate;
+        cell_rise(t){ values("0.070, 0.320", "0.090, 0.340"); }
+        cell_fall(t){ values("0.070, 0.320", "0.090, 0.340"); }
+        rise_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+        fall_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+      }
+      timing(){ related_pin : "C"; timing_sense : non_unate;
+        cell_rise(t){ values("0.070, 0.320", "0.090, 0.340"); }
+        cell_fall(t){ values("0.070, 0.320", "0.090, 0.340"); }
+        rise_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+        fall_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+      }
+    }
+  }
+  cell(AOI22){ area : 1.67;
+    pin(A){ direction : input; capacitance : 0.002; }
+    pin(B){ direction : input; capacitance : 0.002; }
+    pin(C){ direction : input; capacitance : 0.002; }
+    pin(D){ direction : input; capacitance : 0.002; }
+    pin(Y){ direction : output; function : "!((A&B)|(C&D))"; max_capacitance : 1.0;
+      timing(){ related_pin : "A"; timing_sense : non_unate;
+        cell_rise(t){ values("0.090, 0.340", "0.110, 0.360"); }
+        cell_fall(t){ values("0.090, 0.340", "0.110, 0.360"); }
+        rise_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+        fall_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+      }
+      timing(){ related_pin : "B"; timing_sense : non_unate;
+        cell_rise(t){ values("0.090, 0.340", "0.110, 0.360"); }
+        cell_fall(t){ values("0.090, 0.340", "0.110, 0.360"); }
+        rise_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+        fall_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+      }
+      timing(){ related_pin : "C"; timing_sense : non_unate;
+        cell_rise(t){ values("0.090, 0.340", "0.110, 0.360"); }
+        cell_fall(t){ values("0.090, 0.340", "0.110, 0.360"); }
+        rise_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+        fall_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+      }
+      timing(){ related_pin : "D"; timing_sense : non_unate;
+        cell_rise(t){ values("0.090, 0.340", "0.110, 0.360"); }
+        cell_fall(t){ values("0.090, 0.340", "0.110, 0.360"); }
+        rise_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+        fall_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+      }
+    }
+  }
+  cell(OAI22){ area : 1.67;
+    pin(A){ direction : input; capacitance : 0.002; }
+    pin(B){ direction : input; capacitance : 0.002; }
+    pin(C){ direction : input; capacitance : 0.002; }
+    pin(D){ direction : input; capacitance : 0.002; }
+    pin(Y){ direction : output; function : "!((A|B)&(C|D))"; max_capacitance : 1.0;
+      timing(){ related_pin : "A"; timing_sense : non_unate;
+        cell_rise(t){ values("0.090, 0.340", "0.110, 0.360"); }
+        cell_fall(t){ values("0.090, 0.340", "0.110, 0.360"); }
+        rise_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+        fall_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+      }
+      timing(){ related_pin : "B"; timing_sense : non_unate;
+        cell_rise(t){ values("0.090, 0.340", "0.110, 0.360"); }
+        cell_fall(t){ values("0.090, 0.340", "0.110, 0.360"); }
+        rise_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+        fall_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+      }
+      timing(){ related_pin : "C"; timing_sense : non_unate;
+        cell_rise(t){ values("0.090, 0.340", "0.110, 0.360"); }
+        cell_fall(t){ values("0.090, 0.340", "0.110, 0.360"); }
+        rise_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+        fall_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+      }
+      timing(){ related_pin : "D"; timing_sense : non_unate;
+        cell_rise(t){ values("0.090, 0.340", "0.110, 0.360"); }
+        cell_fall(t){ values("0.090, 0.340", "0.110, 0.360"); }
+        rise_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+        fall_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+      }
+    }
+  }
+  cell(XOR2){ area : 2.33;
+    pin(A){ direction : input; capacitance : 0.002; }
+    pin(B){ direction : input; capacitance : 0.002; }
+    pin(Y){ direction : output; function : "(A^B)"; max_capacitance : 1.0;
+      timing(){ related_pin : "A"; timing_sense : non_unate;
+        cell_rise(t){ values("0.120, 0.370", "0.140, 0.390"); }
+        cell_fall(t){ values("0.120, 0.370", "0.140, 0.390"); }
+        rise_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+        fall_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+      }
+      timing(){ related_pin : "B"; timing_sense : non_unate;
+        cell_rise(t){ values("0.120, 0.370", "0.140, 0.390"); }
+        cell_fall(t){ values("0.120, 0.370", "0.140, 0.390"); }
+        rise_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+        fall_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+      }
+    }
+  }
+  cell(XNOR2){ area : 2.33;
+    pin(A){ direction : input; capacitance : 0.002; }
+    pin(B){ direction : input; capacitance : 0.002; }
+    pin(Y){ direction : output; function : "!(A^B)"; max_capacitance : 1.0;
+      timing(){ related_pin : "A"; timing_sense : non_unate;
+        cell_rise(t){ values("0.120, 0.370", "0.140, 0.390"); }
+        cell_fall(t){ values("0.120, 0.370", "0.140, 0.390"); }
+        rise_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+        fall_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+      }
+      timing(){ related_pin : "B"; timing_sense : non_unate;
+        cell_rise(t){ values("0.120, 0.370", "0.140, 0.390"); }
+        cell_fall(t){ values("0.120, 0.370", "0.140, 0.390"); }
+        rise_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+        fall_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+      }
+    }
+  }
+  cell(MUX2){ area : 2.33;
+    pin(A){ direction : input; capacitance : 0.002; }
+    pin(B){ direction : input; capacitance : 0.002; }
+    pin(S){ direction : input; capacitance : 0.002; }
+    pin(Y){ direction : output; function : "((A&!S)|(B&S))"; max_capacitance : 1.0;
+      timing(){ related_pin : "A"; timing_sense : non_unate;
+        cell_rise(t){ values("0.120, 0.370", "0.140, 0.390"); }
+        cell_fall(t){ values("0.120, 0.370", "0.140, 0.390"); }
+        rise_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+        fall_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+      }
+      timing(){ related_pin : "B"; timing_sense : non_unate;
+        cell_rise(t){ values("0.120, 0.370", "0.140, 0.390"); }
+        cell_fall(t){ values("0.120, 0.370", "0.140, 0.390"); }
+        rise_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+        fall_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+      }
+      timing(){ related_pin : "S"; timing_sense : non_unate;
+        cell_rise(t){ values("0.120, 0.370", "0.140, 0.390"); }
+        cell_fall(t){ values("0.120, 0.370", "0.140, 0.390"); }
+        rise_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+        fall_transition(t){ values("0.020, 0.270", "0.040, 0.290"); }
+      }
+    }
+  }
+}

@@ -7,6 +7,7 @@
 #======================================================
 #  Global Parameters
 #======================================================
+sh mkdir -p Netlist
 set DESIGN       "PUYO_TOP"
 set CYCLE        3.0
 set INPUT_DLY    [expr 0.5 * $CYCLE]
@@ -68,8 +69,8 @@ change_names -hierarchy -rules name_rule
 #  Output Results
 #======================================================
 set verilogout_no_tri true
-write -format verilog -hierarchy -output ${DESIGN}_SYN.v
-write_sdf -version 3.0 -context verilog ${DESIGN}_SYN.sdf
+write -format verilog -hierarchy -output Netlist/${DESIGN}_SYN.v
+write_sdf -version 3.0 -context verilog Netlist/${DESIGN}_SYN.sdf
 
 #======================================================
 #  Finish and Quit

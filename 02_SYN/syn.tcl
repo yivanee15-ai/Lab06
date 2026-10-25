@@ -44,12 +44,13 @@ set_load         $OUTPUT_LOAD [all_outputs]
 #  Optimization
 #======================================================
 check_design
+set_ungroup [get_cells u_soft_ip] false
 compile_ultra
 
 #======================================================
 #  Output Reports
 #======================================================
-report_area   > ${DESIGN}.area
+report_area -hierarchy > ${DESIGN}.area
 report_timing > ${DESIGN}.timing
 report_qor    > ${DESIGN}.qor
 

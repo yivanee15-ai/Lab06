@@ -38,6 +38,7 @@ wire last_cell = in_valid && ring[W-1] && (rcnt == 4'd11);
 wire fin;
 wire fin_idle;
 wire upd_last;
+wire issue;
 
 integer ci;
 // control: reset
@@ -284,7 +285,7 @@ always @(*) begin
 end
 
 wire go       = start || run;
-wire issue    = go && !contB && (has_avail || probes_left);
+assign issue  = go && !contB && (has_avail || probes_left);
 wire done_all = (pcnt == npb) && !has_avail && !vA;
 assign fin      = candB && done_all;
 assign fin_idle = go && !vA && !vB && (pcnt == npb) && !has_avail;
